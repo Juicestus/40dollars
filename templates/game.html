@@ -1,0 +1,92 @@
+<!-----------------------------
+ Create Document
+ (c) Justus Languell 2021
+------------------------------>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>40 Dollars</title>
+
+        <meta name="description" content="40 Dollars">
+        <meta name="keywords" content="40 Dollars">
+        <meta name="author" content="Justus Languell">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/styles.css") }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" 
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" 
+            integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
+        </script>
+        <script>
+            var socket = io();	
+            var _name = '{{name}}';
+            var code = '{{gcode}}';
+            var host = '{{hostn}}';
+            var round = '{{_round}}';
+        </script>
+        <script src='{{ url_for("static", filename="js/game.js") }}'></script>
+        <style>
+            @font-face {
+                font-family: "SFPro";
+                src: url('static/fonts/SFPro/SF-Pro-Text-Regular.otf');
+            }
+        </style>
+    </head>
+    <body class="">
+        <div class="centerxy br" style="min-height: 700px; width: 800px;">
+            <div class="green-bg br-tl br-tr game-div" >
+                <center>
+                    <h3 style="margin: 10px;"><b class="orange" id="">Submit meme relating too: </b></h3>
+                </center>
+            </div>
+            <div class="purple-bg game-div" >
+                <center>
+                    <h2 style="margin: 10px;"><b class="" id="prompt">...</b></h2>
+                    <div id="start"></div>
+                </center>
+            </div>
+            <div class="white-bg br-bl br-br game-div" style="min-height: 500px;">
+                <center>
+                    <br>
+                    <table>
+                        <tr>
+                            <td>
+                                <center>
+                                <div class="btn-wrap upl-btn-wrap">
+                                    <input id="fileUpload" type='file' name="myfile" style="visibility: hidden;"/>
+                                    <button type="button" class="btn" onclick="$('#fileUpload').click();"><h4>Upload Meme</h4></button>
+                                </div>
+                                    <p class="blue" id="imageName"><i>No image file selected!</i></p>
+                                </center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <center>
+                                <div class="btn-wrap upl-btn-wrap">
+                                    <button type="button" class="btn" onclick="sendImg();"><h4>Submit Meme</h4></button>
+                                </div>
+                                </center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <center>
+                                <h4 id="warning" class="red"></h4>
+                                </center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <center>
+                                <p id="subbed" class="blue"></p>
+                                </center>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+        </div>
+    </body>
+</html>

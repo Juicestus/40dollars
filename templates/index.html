@@ -1,0 +1,54 @@
+<!------------------------------
+ Index Document
+ (c) Justus Languell 2021
+------------------------------->
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>40 Dollars</title>
+        <meta name="description" content="40 Dollars">
+        <meta name="keywords" content="40 Dollars">
+        <meta name="author" content="Justus Languell">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/styles.css") }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" 
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+        </script>
+        <style>
+            @font-face {
+                font-family: "SFPro";
+                src: url('static/fonts/SFPro/SF-Pro-Text-Regular.otf');
+            }
+        </style>
+    </head>
+    <body class="">
+        <div class="centerxy purple-bg br" style="height: 540px; width: 500px;">
+            <center>
+            <div  class="centerxy" style="height: 380px; width: 500px;">
+                <form method="POST">
+                <table>
+                    <tr><td><center>
+                        <h1>40 Dollars!</h1>
+                    </center></td></tr>
+                    <tr><td><center>
+                        <h3>A game by <a href="https://www.justusl.com/">Justus Languell</a><br><br></h3>
+                    </center></td></tr>
+                    <tr><td><center>
+                        <div class="btn-wrap upl-btn-wrap">
+                            <button type="button" class="btn" onclick="window.location.href='/join';"><h2>Join Game</h2></button>
+                        </div>
+                    </center></td></tr>
+                    <tr><td><center>
+                        <div class="btn-wrap upl-btn-wrap">
+                            <input id="createbtn" class="btn" type="submit" value="Create" style="visibility: hidden;"/>
+                            <button type="button" class="btn" onclick="$('#createbtn').click();"><h2>Create Game</h2></button><br>
+                        </div>
+                    </center></td></tr>
+                </table>
+                </form>
+            </table>
+            </div>
+            </center>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<!-----------------------------
+ Enter Code Document
+ (c) Justus Languell 2021
+------------------------------>
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>40 Dollars</title>
+        <meta name="description" content="40 Dollars">
+        <meta name="keywords" content="40 Dollars">
+        <meta name="author" content="Justus Languell">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/styles.css") }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" 
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+        </script>
+        <script src='{{ url_for("static", filename="js/code.js") }}'></script>
+        <style>
+            @font-face {
+                font-family: "SFPro";
+                src: url('static/fonts/SFPro/SF-Pro-Text-Regular.otf');
+            }
+        </style>
+    </head>
+    <body class="">
+        <div class="centerxy purple-bg br" style="height: 540px; width: 500px;">
+            <center>
+            <div  class="centerxy" style="height: 380px; width: 500px;">
+                <form method="POST">
+                <table>
+                    <tr><td><center>
+                        <h1>Enter Code</h1><br>
+                    </center></td></tr>
+                    <tr><td><center>
+                    <div>    
+                        <input style="font-size: 175%; width: 300px;" maxlength="4" id="code" type="text" name="code" placeholder="Code">
+                        <p class="text" id="remaining">0/4</p>
+                    </div>
+                    </center></td></tr>
+                    <tr><td><center>
+                        <div class="btn-wrap upl-btn-wrap">
+                            <input id="joinbtn" class="btn" type="submit" value="Join" style="visibility: hidden;"/>
+                            <button type="button" class="btn" onclick="$('#joinbtn').click();"><h2>Join Game</h2></button><br>
+                        </div>
+                    </center></td></tr>
+                    <tr><td><center>
+                        <div>
+                            <h4><a href="/">Back</a></h4>
+                        </div>
+                    </center></td></tr>
+                    <tr><td><center>
+                        <div>
+                            <h4 class="red" id="codeError"></h4>
+                            <h4 class="red">{{errormsg}}</h4>
+                        </div>
+                    </center></td></tr>
+                </table>
+            </form>
+            </div>
+            </center>
+        </div>
+    </body>
