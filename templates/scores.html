@@ -17,19 +17,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" 
             integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
         </script>
-        <script>
-            var socket = io();	
-            var _name = '{{name}}';
-            var code = '{{gcode}}';
-            var scores = '{{scores | tojson}}';
-        </script>
+        <script>var socket = io(); var _name = '{{name}}'; var code = '{{gcode}}'; var scores = '{{scores | tojson}}';</script>
         <script src='{{ url_for("static", filename="js/scores.js") }}'></script>
-        <style>
-            @font-face {
-                font-family: "SFPro";
-                src: url('static/fonts/SFPro/SF-Pro-Text-Regular.otf');
-            }
-        </style>
+        <style>@font-face {font-family: "SFPro";src: url('static/fonts/SFPro/SF-Pro-Text-Regular.otf');}</style>
     </head>
     <body class="">
         <div class="centerxy br" style="min-height: 700px; width: 800px;">

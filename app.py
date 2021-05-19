@@ -235,6 +235,7 @@ def index():
             'time': int(time.time()),
             'players': [],
             'host': 'NoHost',
+            'jable': True,
             'round': 1,
             'prompts': [],
             'history': {},
@@ -291,17 +292,21 @@ def joinGame(code):
     errormsg = ""
     if code in games.keys():
         if request.method == 'POST':
-            if len(games[code]['players']) < players:
-                name = request.form['name']
-                if name not in games[code]['players']:
-                    session['name'] = name
-                    session['game'] = code
-                    games[code]['players'].append(name)
-                    return redirect(f'/play/{code}')
+            if games[code]['jable']:
+                if len(games[code]['players']) < players:
+                    name = request.form['name']
+                    if name not in games[code]['players']:
+                        session['name'] = name
+                        session['game'] = code
+                        games[code]['players'].append(name)
+                        return redirect(f'/play/{code}')
+                    else:
+                        errormsg = "Name not available!"
                 else:
-                    errormsg = "Name not available!"
+                    errormsg = "Game is full!"
             else:
-                errormsg = "Game is full!"
+                errormsg = "Game has already started!"
+       
         return render_template('name.html', gcode=code, errormsg=errormsg)
     else:
         #return render_template('error.html', error="This code does not exist!")
@@ -422,6 +427,7 @@ def startGame(block):
         if host == name:
             if host == games[code]['host']:
                 if players > len(games[code]['players']) > 1:
+                    games[code]['jable'] = False
                     emit('serverStartGame', '', to=code) 
                     #, namespace=f'/play/{code}')
                 else:
@@ -638,7 +644,11 @@ def getTimer(block):
                 if host == games[code]['host']:
                     if games[code]['endtime'] == 'NOTSET':
                         t = int(time.time())
-                        games[code]['endtime'] = t+40
+                        if len(games[code]['players']) > 4:
+                            at = 30
+                        else:
+                            at = 20
+                        games[code]['endtime'] = t+at+10
                     state = 'A'
                     if time.time() >= games[code]['endtime']:
                         games[code]['round'] += 1
@@ -738,6 +748,8 @@ def Not_Found(e):
 # Starts the application
 if __name__ == '__main__':
     #socketio.run(app)
-    socketio.run(app, debug=True)
-
+    if '-d' in sys.argv:
+        socketio.run(app, debug=True)
+    else:
+        socketio.run(app, debug=False, host='0.0.0.0', port=80)
 #_#
