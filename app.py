@@ -9,7 +9,8 @@
 
 from flask import (Flask, 
                   render_template, 
-                  url_for, request, 
+                  url_for, 
+                  request, 
                   abort, 
                   redirect, 
                   Response, 
@@ -23,13 +24,15 @@ from flask_socketio import (SocketIO,
                            rooms, 
                            disconnect)
 
-from threading import Timer
+from threading import Timer, Thread
+
 from functools import wraps
 
 import base64
 import random
 import time
-import sys        
+import sys     
+import os   
 
 ########################
 # Initiate Application #
@@ -42,7 +45,7 @@ socketio = SocketIO(app)
 
 games = {}
 
-rounds = 1
+rounds = 4
 players = 8
 
 ###########
@@ -168,23 +171,40 @@ def delay(delay=0.):
 
 # killGame
 # Wrapped with delay of 30 seconds
-# so it deletes a game session 30 seconds 
+# so it deletes a game session and 
+# the images in its folder 30 seconds 
 # after being called
 @delay(30.0)
 def killGame(code):
     if code in games.keys():
         del games[code]
+        if os.path.isdir(f'static/uploads/{code}'):
+            #os.remove(f'static/uploads/{code}')
+            for fn in os.listdir(f'static/uploads/{code}'):
+                os.remove(f'static/uploads/{code}/{fn}')
+            os.rmdir(f'static/uploads/{code}')
+
+        else:
+            pass # something may have gone pretty wrong, 
+                 # or just nobody ever submitted images
+
+        # manually clear dir: $ rm -r *
 
 
 # formatImg
 # Formats base64 image and saves to database
 # Returns URL of image to display
-def formatImg(img):
+def formatImg(code, img):
     if img != 'NOIMAGE':
         src = img.split(',')
         data = src[1]
         ext = ((src[0].split('/'))[1].split(';'))[0]
-        filename = f'uploads/{time.time()}.{ext}'
+        if not os.path.isdir(f'static/uploads'):
+            os.mkdir(f'static/uploads')
+        if not os.path.isdir(f'static/uploads/{code}'):
+            os.mkdir(f'static/uploads/{code}')
+        name = str(time.time()).split('.')
+        filename = f'uploads/{code}/{name[0]}{name[1]}.{ext}'
         with open('static/' + filename, 'wb') as f:
             f.write(base64.decodebytes(data.encode("ascii")))
         return url_for("static", filename=filename)
@@ -513,7 +533,7 @@ def imgSubmit(block):
             if int(_round) == games[code]['round']:
                 if games[code]['round'] % 2 == 1:
                     join_room(code)
-                    fn = formatImg(src)
+                    fn = formatImg(code, src)
                     if _round not in games[code]['subs'].keys():
                         games[code]['subs'][_round] = {}
                     games[code]['subs'][_round][name] = fn

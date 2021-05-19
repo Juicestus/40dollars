@@ -26,7 +26,7 @@ $(document).ready(function()
 {
     scores = jQuery.parseJSON(scores);
     var users = Object.keys(scores);
-    users = users.reverse();
+    //users = users.reverse();
     var colors = randomColorList(scores.length);
     render = "";
     //for (var i=0; i < users.length; i++) {
@@ -44,7 +44,7 @@ $(document).ready(function()
         } else {
             sscores = scores[user] + ' points';
         }
-        if (user != _name) {
+        if (user == _name) {
             user = 'You'
         }        
         if (i >=  users.length-1) {

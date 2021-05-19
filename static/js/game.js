@@ -3,11 +3,24 @@
  * (c) Justus Languell 2021
  */
 
+var allowedExt = ['png','jpeg','jpg','gif'];
+
 function b64size(src) 
 {
     return Math.round(4 * Math.ceil(((src.length - 22) / 3)) * 0.5624896334383812);
 }
 
+function isFileGood(name)
+{
+    var fextg = false;
+    var splitName = name.split('.')
+    for (var ext of allowedExt) {
+        if (splitName[splitName.length-1] == ext) {
+            fextg = true
+        }
+    }
+    return fextg
+}
 function sendImg()
 {
     var file = document.getElementById('fileUpload').files[0];
@@ -31,8 +44,13 @@ function sendImg()
         }
     };
     if (file) {
-        document.getElementById('warning').innerHTML = "";
-        reader.readAsDataURL(file);
+        console.log(isFileGood(file.name))
+        if (isFileGood(file.name)) {
+            document.getElementById('warning').innerHTML = "";
+            reader.readAsDataURL(file);
+        } else {
+            document.getElementById('warning').innerHTML = "Not an allowed image type!";
+        }
     } else {
         document.getElementById('warning').innerHTML = "No image selected!";
         /*
